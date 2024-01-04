@@ -1,10 +1,9 @@
-# Getting Started app for Discord
+# Shrotbot - GSG Schedule Discord Helper Bot
 
-This project contains a basic rock-paper-scissors-style Discord app written in JavaScript, built for the [getting started guide](https://discord.com/developers/docs/getting-started).
-
-![Demo of app](https://github.com/discord/discord-example-app/raw/main/assets/getting-started-demo.gif?raw=true)
-
-> ✨ A version of this code is also hosted **[on Glitch 🎏](https://glitch.com/~getting-started-discord)** and **[on Replit 🌀](https://replit.com/github/discord/discord-example-app)**
+A Discord bot serving to help w/ scheduling changes during GSG Synthon events.  Initially cloned from the 
+Discord developer [getting started guide](https://discord.com/developers/docs/getting-started), shamelessly copying the
+structure of that project as appropriate.  As this is presently a work-in-progress, this may change as development
+proceeds and we learn more about Discord bots.
 
 ## Project structure
 Below is a basic overview of the project structure:
