@@ -8,6 +8,7 @@ import {
   ButtonStyleTypes,
 } from 'discord-interactions';
 import { VerifyDiscordRequest, DiscordRequest } from './utils.js';
+import { Schedule } from './schedule.js';
 
 // Create an express app
 const app = express();
@@ -48,6 +49,25 @@ app.post('/interactions', async function (req, res) {
         data: {
           content: 'Hello, shramp! 🦐',
         },
+      });
+    } else if(name === 'available') {
+      //simple POC from static schedule data
+      let message = 'No slots appear to be available at this time.';
+      let availableSlots = Schedule.getAvailableSlots();
+      //KDM: this be ugly
+      if(availableSlots.length > 0) {
+        message = 'The following slots appear to be available:\n';
+        for (const aSlot in availableSlots) {
+          message += "Start Time: " + aSlot.startTime + '\n';
+          message += "End Time: " + aSlot.endTime + '\n';
+          message += "Stage/Raid Train: " + aSlot.raidTrain + '\n';
+        }
+      }
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: message
+        }
       });
     }
   }

@@ -8,6 +8,12 @@ const TEST_COMMAND = {
   type: 1,
 };
 
-const ALL_COMMANDS = [TEST_COMMAND];
+const CMD_AVAILABLE = {
+  name: 'available',
+  description: 'Reports the available slots for current SYNTHON!',
+  type: 1,
+}
+
+const ALL_COMMANDS = [TEST_COMMAND, CMD_AVAILABLE];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
