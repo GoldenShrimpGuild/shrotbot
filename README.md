@@ -9,16 +9,9 @@ proceeds and we learn more about Discord bots.
 Below is a basic overview of the project structure:
 
 ```
-├── examples    -> short, feature-specific sample apps
-│   ├── app.js  -> finished app.js code
-│   ├── button.js
-│   ├── command.js
-│   ├── modal.js
-│   ├── selectMenu.js
 ├── .env.sample -> sample .env file
 ├── app.js      -> main entrypoint for app
 ├── commands.js -> slash command payloads + helpers
-├── game.js     -> logic specific to RPS
 ├── utils.js    -> utility functions and enums
 ├── package.json
 ├── README.md
@@ -38,7 +31,7 @@ Configuring the app is covered in detail in the [getting started guide](https://
 
 First clone the project:
 ```
-git clone https://github.com/discord/discord-example-app.git
+git clone https://github.com/GoldenShrimpGuild/shrotbot.git
 ```
 
 Then navigate to its directory and install dependencies:
