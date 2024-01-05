@@ -11,7 +11,7 @@
     "start": "node app.js",
     "register": "node commands.js",
     "dev": "nodemon app.js",
-    "test": "mocha"
+    "test": "NODE_ENV=test mocha --exit --timeout 600000 --inspect"
   },
   "author": "Kyle Moore",
   "license": "MIT",
@@ -23,7 +23,10 @@
     "node-fetch": "^3.3.0"
   },
   "devDependencies": {
+    "chai": "npm:@esm-bundle/chai@^4.3.4-fix.0",
+    "chai-http": "^4.4.0",
     "mocha": "^10.2.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "sinon": "^17.0.1"
   }
 }

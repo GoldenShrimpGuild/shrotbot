@@ -14,8 +14,14 @@ import { Schedule } from './schedule.js';
 const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
-// Parse request body and verifies incoming requests using discord-interactions package
-app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
+// In test environment, use regular JSON parsing without verification
+if (process.env.NODE_ENV !== 'test') {
+  // Parse request body and verifies incoming requests using discord-interactions package
+  app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
+} else {
+  // In test environment, use regular JSON parsing without verification
+  app.use(express.json());
+}
 
 // Store for in-progress games. In production, you'd want to use a DB
 const activeGames = {};
@@ -59,7 +65,6 @@ app.post('/interactions', async function (req, res) {
         message = 'The following slots appear to be available:\n';
         for (const aSlot of availableSlots) {
           message += "Start Time: " + aSlot.startTime + '\n';
-          message += "End Time: " + aSlot.endTime + '\n';
           message += "Stage/Raid Train: " + aSlot.raidTrain + '\n';
         }
       }
@@ -69,10 +74,17 @@ app.post('/interactions', async function (req, res) {
           content: message
         }
       });
+    } else {
+      return res.status(400).send('Unknown command');
     }
+  } else {
+    return res.status(400).send('Unknown interaction type or type not found.');
   }
 });
 
 app.listen(PORT, () => {
   console.log('Listening on port', PORT);
 });
+
+//export for use by chaiHttp
+export default app;
