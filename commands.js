@@ -12,7 +12,7 @@ const CMD_AVAILABLE = {
   name: 'available',
   description: 'Reports the available slots for current SYNTHON!',
   type: 1,
-}
+};
 
 const ALL_COMMANDS = [TEST_COMMAND, CMD_AVAILABLE];
 

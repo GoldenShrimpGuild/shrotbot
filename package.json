@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node app.js",
     "register": "node commands.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "test": "mocha"
   },
   "author": "Kyle Moore",
   "license": "MIT",
@@ -22,6 +23,7 @@
     "node-fetch": "^3.3.0"
   },
   "devDependencies": {
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.15"
   }
 }

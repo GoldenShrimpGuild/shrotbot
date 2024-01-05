@@ -57,7 +57,7 @@ app.post('/interactions', async function (req, res) {
       //KDM: this be ugly
       if(availableSlots.length > 0) {
         message = 'The following slots appear to be available:\n';
-        for (const aSlot in availableSlots) {
+        for (const aSlot of availableSlots) {
           message += "Start Time: " + aSlot.startTime + '\n';
           message += "End Time: " + aSlot.endTime + '\n';
           message += "Stage/Raid Train: " + aSlot.raidTrain + '\n';
