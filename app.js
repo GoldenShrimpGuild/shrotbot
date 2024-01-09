@@ -45,7 +45,7 @@ app.post('/interactions', async function (req, res) {
    * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
-    const { name } = data;
+    const { name, options } = data;
 
     // "test" command
     if (name === 'test') { //KDM - I don't really like how this isn't tied to commands.js in any way
@@ -56,24 +56,70 @@ app.post('/interactions', async function (req, res) {
           content: 'Hello, shramp! 🦐',
         },
       });
-    } else if(name === 'available') {
-      //simple POC from static schedule data
-      let message = 'No slots appear to be available at this time.';
-      let availableSlots = Schedule.getAvailableSlots();
-      //KDM: this be ugly
-      if(availableSlots.length > 0) {
-        message = 'The following slots appear to be available:\n';
-        for (const aSlot of availableSlots) {
-          message += "Start Time: " + aSlot.startTime + '\n';
-          message += "Stage/Raid Train: " + aSlot.raidTrain + '\n';
+    } else if(name === 'synthon') {
+      if(options[0] && options[0].name === 'available') {
+        //simple POC from static schedule data
+        let message = 'No slots appear to be available at this time.';
+        let availableSlots = Schedule.getAvailableSlots();
+        //KDM: this be ugly
+        if(availableSlots.length > 0) {
+          message = 'The following slots appear to be available:\n';
+          for (const aSlot of availableSlots) {
+            message += "Start Time: " + aSlot.startTime + '\n';
+            message += "Stage/Raid Train: " + aSlot.raidTrain + '\n';
+          }
         }
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: message
+          }
+        });
+      } else if(options[0] && options[0].name === 'now') {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Not yet implemented',
+          },
+        });
+      } else if(options[0] && options[0].name === 'me') {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Not yet implemented',
+          },
+        });
+      } else if(options[0] && options[0].name === 'cancel') {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Not yet implemented',
+          },
+        });
+      } else if(options[0] && options[0].name === 'trade') {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Not yet implemented',
+          },
+        });
+      } else if(options[0] && options[0].name === 'signup') {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Not yet implemented',
+          },
+        });
+      } else if(options[0] && options[0].name === 'confirm') {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Not yet implemented',
+          },
+        });
+      } else {
+        return res.status(400).send('Unknown SYNTHON! subcommand');
       }
-      return res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          content: message
-        }
-      });
     } else {
       return res.status(400).send('Unknown command');
     }
