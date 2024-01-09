@@ -11,7 +11,8 @@ import { VerifyDiscordRequest, DiscordRequest } from './utils.js';
 import { Schedule } from './schedule.js';
 import { DateTime } from 'luxon';
 
-const MAX_SELECT_ITEMS = 25;
+const MAX_SELECT_ITEMS = 25; //discord only allows this many slots in select menus
+
 // Create an express app
 const app = express();
 // Get port, or default to 3000
@@ -97,8 +98,9 @@ app.post('/interactions', async function (req, res) {
                       "type": 3,
                       "custom_id": "available_select_1", //TODO generate atomic ID when state storage implemented
                       "options": opts,
-                      "placeholder": "Choose a class",
+                      "placeholder": "Choose your desired slots...",
                       "min_values": 1,
+                      "max_values": MAX_SELECT_ITEMS, //seem to be outputing slots in 30m increments, regardless...multiple may be desired
                     }
                   ]
                 }
