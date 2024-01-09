@@ -9,7 +9,9 @@ import {
 } from 'discord-interactions';
 import { VerifyDiscordRequest, DiscordRequest } from './utils.js';
 import { Schedule } from './schedule.js';
+import { DateTime } from 'luxon';
 
+const MAX_SELECT_ITEMS = 25;
 // Create an express app
 const app = express();
 // Get port, or default to 3000
@@ -64,17 +66,53 @@ app.post('/interactions', async function (req, res) {
         //KDM: this be ugly
         if(availableSlots.length > 0) {
           message = 'The following slots appear to be available:\n';
+          /*
           for (const aSlot of availableSlots) {
             message += "Start Time: " + aSlot.startTime + '\n';
             message += "Stage/Raid Train: " + aSlot.raidTrain + '\n';
           }
-        }
-        return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: message
+           */
+          let opts = [];
+          //TODO pagination due to limit of select item length
+          for (let i=0; i < (availableSlots.length < MAX_SELECT_ITEMS ? availableSlots.length : MAX_SELECT_ITEMS); i++) {
+            let aSlot = availableSlots[i];
+            let dt = DateTime.fromFormat(aSlot.startTime, 'yyyy-MM-dd HH:mm',{zone:Schedule.getTimezone()});
+            let opt = {
+              "label": `Start Time: <t:${dt.toUnixInteger()}:f> ${aSlot.raidTrain}`,
+              "value": `slot_${i}`, //it would be much easier to assign IDs to the slot then do everything based on time
+                                    //starting w/ an index-based id atm
+              "description": `${aSlot.raidTrain} Slot ${i}`,
+            };
+            opts.push(opt);
           }
-        });
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: message,
+              "components": [
+                {
+                  "type": 1,
+                  "components": [
+                    {
+                      "type": 3,
+                      "custom_id": "available_select_1", //TODO generate atomic ID when state storage implemented
+                      "options": opts,
+                      "placeholder": "Choose a class",
+                      "min_values": 1,
+                    }
+                  ]
+                }
+              ]
+            }
+          });
+        } else {
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: message,
+            }
+          });
+        }
       } else if(options[0] && options[0].name === 'now') {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,

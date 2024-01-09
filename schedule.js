@@ -9,4 +9,7 @@ export class Schedule {
         }
         return availableSlots;
     }
+    static getTimezone() {
+        return timezone;
+    }
 }

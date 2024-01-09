@@ -22,12 +22,17 @@ describe('Schedule', function(){
 });
 
 describe('Discord Bot Interactions', () => {
-    it('should invoke the "available" command', (done) => {
+    it('should invoke the "synthon available" command', (done) => {
         const interactionData = {
             type: 2, // Type 2 for "APPLICATION_COMMAND",
             id: 'booger',
             data: {
-                name: 'available',
+                name: 'synthon',
+                "options": [{
+                    "type": 1,
+                    "name": "available",
+                    "description": "Reports the available slots for current SYNTHON!"
+                }],
                 // Add other necessary command data here
             },
             // Include other necessary interaction properties like "guild_id", "channel_id", etc.
