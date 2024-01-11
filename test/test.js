@@ -1,3 +1,4 @@
+//FIXME these tests no longer valid since switching to discord.js
 import assert from "assert";
 import {Schedule} from "../schedule.js";
 
